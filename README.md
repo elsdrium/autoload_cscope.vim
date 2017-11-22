@@ -1,3 +1,11 @@
+# autoload-cscope
+
+### Changelog
+
+#### 2017-11-23
+ - Add command for rebuilding cscope database inside your project.
+
+### Description
 This is a fork of http://www.vim.org/scripts/script.php?script_id=157
 
 This plugin will automatically look for cscope.out databases when you open any file.

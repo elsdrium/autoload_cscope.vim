@@ -1,5 +1,5 @@
 " Vim global plugin for autoloading cscope databases.
-" Last Change: Mon Nov 20 03:41:35 CST 2017
+" Last Change: Thu Nov 23 01:16:43 CST 2017
 " Original Author: Michael Conrad Tadpol Tilsra <tadpol@tadpol.org>
 " Modifier: HsuehMin Chen <elsdrium@gmail.com>
 
@@ -98,13 +98,19 @@ function s:Cycle_csdb()
       set csverb
       let &csverb = save_csvb
     endif
-    "
   else " No cscope database, undo things. (someone rm-ed it or somesuch)
     call s:Unload_csdb()
   endif
 endfunc
 
-" auto toggle the menu
+function s:Refresh_csdb()
+  if exists("b:csdbpath")
+    silent exe "!cscope -b -i " . b:csdbpath . "/cscope.files -f " . b:csdbpath . "/cscope.out"
+    silent exe "cs reset"
+    exe "redraw!"
+  endif
+endfunc
+
 augroup autoload_cscope
   au!
   au BufEnter * call <SID>Cycle_csdb()
@@ -113,3 +119,4 @@ augroup END
 
 let &cpo = s:save_cpo
 
+command! -nargs=0 RefreshCSDB call <SID>Refresh_csdb()
